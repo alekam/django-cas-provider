@@ -46,6 +46,8 @@ def cas_mapping(user):
     return {
         'is_staff': unicode(user.is_staff),
         'is_active': unicode(user.is_active),
+        'first_name': user.first_name,
+        'last_name': user.last_name,
         'email': user.email,
         'group': [g.name for g in user.groups.all()],
     }
