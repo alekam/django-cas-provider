@@ -31,6 +31,7 @@ def ruby_cas(auth_success, attrs):
             element = etree.SubElement(auth_success, CAS + name)
             element.text = value
 
+
 def name_value(auth_success, attrs):
     etree.SubElement(auth_success, CAS + 'attribute', name=u'attraStyle', value=u'Name-Value')
     for name, value in attrs.items():
@@ -39,3 +40,12 @@ def name_value(auth_success, attrs):
                 etree.SubElement(auth_success, CAS + 'attribute', name=name, value=e)
         else:
             etree.SubElement(auth_success, CAS + 'attribute', name=name, value=value)
+
+
+def cas_mapping(user):
+    return {
+        'is_staff': unicode(user.is_staff),
+        'is_active': unicode(user.is_active),
+        'email': user.email,
+        'group': [g.name for g in user.groups.all()],
+    }

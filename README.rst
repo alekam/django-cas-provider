@@ -57,6 +57,7 @@ PROTOCOL DOCUMENTATION
 * `CAS – Central Authentication Service <http://www.jusfortechies.com/cas/overview.html>`
 * `Proxy CAS Walkthrough <https://wiki.jasig.org/display/CAS/Proxy+CAS+Walkthrough>`
 
+
 PROVIDED VIEWS
 =============
 
@@ -106,8 +107,26 @@ Work with proxy is not supported yet.
 It has not arguments.
 
 
+CUSTOM USER ATTRIBUTES
+======================
+
+Your authentication service can provide some useful user data with CAS 2.0+ protocol.
+You need to define callable to process user instance and returns dictionary with user attributes.
+Example from `attribute_formatters.py` ::
+
+	def cas_mapping(user):
+    	return {
+        	'is_staff': unicode(user.is_staff),
+        	'is_active': unicode(user.is_active),
+        	'email': user.email,
+        	'group': [g.name for g in user.groups.all()],
+    	}
+
+You need to set `CAS_CUSTOM_ATTRIBUTES_CALLBACK` with your function name.
+
+
 CUSTOM USER ATTRIBUTES FORMAT
-===========================
+=============================
 
 Custom attribute format style may be changed in project settings with 
 CAS_CUSTOM_ATTRIBUTES_FORMAT constant. You can provide your own formatter callback
