@@ -56,7 +56,6 @@ def login(request, template_name='cas/login.html', \
         })
     return render_to_response(template_name, {
         'form': form,
-        'errors': form.get_errors()
     }, context_instance=RequestContext(request))
 
 

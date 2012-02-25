@@ -33,6 +33,8 @@ class LoginForm(forms.Form):
     def clean(self):
         username = self.cleaned_data.get('username')
         password = self.cleaned_data.get('password')
+        if not username or not password:
+            return self.cleaned_data
         user = authenticate(username=username, password=password)
         if user is None:
             raise ValidationError(_('Incorrect username and/or password.'))
@@ -44,9 +46,3 @@ class LoginForm(forms.Form):
 
     def get_user(self):
         return self._user
-    
-    def get_errors(self):
-        errors = []
-        for k, error in self.errors.items():
-            errors += [e for e in error]
-        return errors
